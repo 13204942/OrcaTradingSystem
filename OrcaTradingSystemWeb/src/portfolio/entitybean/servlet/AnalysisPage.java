@@ -33,14 +33,15 @@ public class AnalysisPage {
 			@PathParam("id") int id) {
 		mostRecentPrices =  analysisManager.getMostRecentPrices(id);
 		trades = analysisManager.getAllTrades(id);
+		String portfolioName = analysisManager.getPortfolioName(id);
 		
-		if ((mostRecentPrices == null) || (trades == null)) {
+		if ((mostRecentPrices == null) || (trades == null) || (portfolioName.equals(null))) {
 			return Response.status(Status.fromStatusCode(500)).build();
 		}
 		
 		double totalROI = calculateTotalROI();
 		double totalProfit = calculateTotalProfit();
-		double[] overallPortfolioData = {totalROI, totalProfit};
+		Object[] overallPortfolioData = {totalROI, totalProfit, portfolioName};
 		
 		return Response.ok(overallPortfolioData).build();
 	}
@@ -70,26 +71,34 @@ public class AnalysisPage {
 	}
 	
 	private double calculateTotalROI() {
-		double totalRoi = 0.0;
-		int count = 0;
+		double totalROI = 0.0;
+		int totalShares = 0;
 		for (Trade trade : trades) {
 			double currentPrice = mostRecentPrices.get(trade.getStockCode());
-			double tempRoi = (currentPrice - trade.getPrice()) / trade.getPrice();
-			count++;
-			totalRoi = (totalRoi + tempRoi) / count;
+			int currentShares = trade.getShares();
+			double tempROI = (currentPrice - trade.getPrice()) / trade.getPrice();
+			if( !trade.getBuy() ) {
+				tempROI *= -1;
+			}
+			totalShares += currentShares;
+			totalROI = (totalROI * (1 - (currentShares / totalShares))) + (tempROI * (currentShares/totalShares));
 		}
-		return totalRoi;
+		return totalROI;
 	}
 	
 	private double calculateSelectedROI(String code) {
 		double selectedROI = 0.0;
 		double currentPrice = mostRecentPrices.get(code);
-		int count = 0;
+		int totalShares = 0;
 		for (Trade trade : trades) {
 			if (trade.getStockCode().equals((code))) {
+				int currentShares = trade.getShares();
 				double tempROI = (currentPrice - trade.getPrice()) / trade.getPrice();
-				count++;
-				selectedROI = (selectedROI + tempROI) / count;
+				if( !trade.getBuy() ) {
+					tempROI *= -1;
+				}
+				totalShares += currentShares;
+				selectedROI = (selectedROI * (1 - (currentShares / totalShares))) + (tempROI * (currentShares/totalShares));
 			}
 		}
 		
@@ -100,7 +109,11 @@ public class AnalysisPage {
 		double totalProfit = 0.0;
 		for (Trade trade : trades) {
 			double currentPrice = mostRecentPrices.get(trade.getStockCode());
-			totalProfit = totalProfit + (currentPrice - trade.getPrice());
+			double tempProfit = (currentPrice - trade.getPrice()) * trade.getShares();
+			if ( !trade.getBuy() ) {
+				tempProfit *= -1;
+			}
+			totalProfit += tempProfit;
 		}
 		return totalProfit;
 	}
@@ -110,7 +123,11 @@ public class AnalysisPage {
 		double currentPrice = mostRecentPrices.get(code);
 		for (Trade trade : trades) {
 			if (trade.getStockCode().equals(code)) {
-				selectedProfit = selectedProfit + (currentPrice - trade.getPrice());
+				double tempProfit = (currentPrice - trade.getPrice()) * trade.getShares();
+				if ( !trade.getBuy() ) {
+					tempProfit *= -1;
+				}
+				selectedProfit += tempProfit;
 			}
 		}
 		return selectedProfit;

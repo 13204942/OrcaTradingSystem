@@ -27,6 +27,12 @@ public class AnalysisSessionBean implements AnalysisSessionBeanLocal {
         // TODO Auto-generated constructor stub
     }
     
+    public String getPortfolioName(int portfolioId) {
+    	TypedQuery<String> query = em.createQuery("SELECT p.name FROM Portfolio p WHERE p.id = :i", String.class);
+    	query.setParameter("i", portfolioId);
+    	return query.getSingleResult();
+    }
+    
     public List<Double> getPrices(String code) {
     	TypedQuery<Double> query = em.createQuery("SELECT s.open_price FROM Stocks s WHERE s.stocks_code = :c", Double.class);
     	query.setParameter("c", code);

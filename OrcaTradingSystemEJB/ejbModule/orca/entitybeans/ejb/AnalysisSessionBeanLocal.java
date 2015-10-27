@@ -10,6 +10,8 @@ import orca.entitybeans.jpa.Trade;
 @Local
 public interface AnalysisSessionBeanLocal {
 	
+	public String getPortfolioName(int portfolioId);
+	
 	public List<Double> getPrices(String code);
 	
 	public Map<String, Double> getMostRecentPrices(int portfolioId);

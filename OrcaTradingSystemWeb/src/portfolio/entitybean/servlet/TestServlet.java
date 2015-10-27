@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
+import orca.entitybeans.ejb.AnalysisSessionBeanLocal;
 import orca.entitybeans.ejb.OrcaSessionBeanLocal;
 import orca.entitybeans.jpa.Portfolio;
 
@@ -23,9 +25,16 @@ public class TestServlet extends HttpServlet {
 
 	@EJB
     private OrcaSessionBeanLocal portfolioManager;
+	
+	@EJB
+	private AnalysisSessionBeanLocal analysisManager;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		analysisManager.getMostRecentPrices(1);
+		analysisManager.getAllTrades(1);
+		analysisManager.getPrices("AAA");
+		
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 

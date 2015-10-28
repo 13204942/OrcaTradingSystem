@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import orca.entitybeans.ejb.AnalysisSessionBeanLocal;
+import orca.entitybeans.ejb.OrcaHomeSessionBeanLocal;
 import orca.entitybeans.jpa.Trades;
 
 @WebServlet("/AnalysisTestServlet")

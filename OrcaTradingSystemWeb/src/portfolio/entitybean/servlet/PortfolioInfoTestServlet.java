@@ -3,7 +3,9 @@ package portfolio.entitybean.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -12,7 +14,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import orca.entitybeans.ejb.OrcaHomeSessionBeanLocal;
 import orca.entitybeans.ejb.PortfolioHomeSessionBeanLocal;
+import orca.entitybeans.jpa.Portfolio;
+import orca.entitybeans.jpa.Stocks;
+import orca.entitybeans.jpa.StocksOwned;
+import orca.entitybeans.jpa.StocksOwnedWithFullName;
 
 @WebServlet("/PortfoliInfo")
 public class PortfolioInfoTestServlet extends HttpServlet {

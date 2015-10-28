@@ -47,12 +47,6 @@ public class YahooSessionSingleton {
 	@PersistenceContext(unitName = "PortfolioEntityBeansJPA-ejbPU"/*,type=PersistenceContextType.EXTENDED*/)
 	EntityManager em;
 	
-	/*@PersistenceUnit(unitName = "org.jbpm.domain")
-    private EntityManagerFactory emf;*/
-	
-	/*@Resource
-	private UserTransaction utx;*/
-	
 	@Resource
     TimerService timerService;
 	

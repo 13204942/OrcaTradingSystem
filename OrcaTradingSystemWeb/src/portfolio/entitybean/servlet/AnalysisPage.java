@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.ws.rs.GET;
@@ -29,7 +30,7 @@ public class AnalysisPage {
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getDataForOverallPortfolio (
+	public Response getDataForPortfolio (
 			@PathParam("id") int id) {
 		mostRecentPrices =  analysisManager.getMostRecentPrices(id);
 		trades = analysisManager.getAllTrades(id);
@@ -41,7 +42,8 @@ public class AnalysisPage {
 		
 		double totalROI = calculateTotalROI();
 		double totalProfit = calculateTotalProfit();
-		Object[] overallPortfolioData = {totalROI, totalProfit, portfolioName};
+		Set<String> listOfStocks = mostRecentPrices.keySet();
+		Object[] overallPortfolioData = {portfolioName, totalROI, totalProfit, listOfStocks};
 		
 		return Response.ok(overallPortfolioData).build();
 	}
@@ -49,7 +51,7 @@ public class AnalysisPage {
 	@GET
 	@Path("/{id}/{code}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getDataForSpecificStock (
+	public Response getDataForStock (
 			@PathParam("id") int id,
 			@PathParam("code") String code) {
 		currentStockPrices = analysisManager.getPrices(code);

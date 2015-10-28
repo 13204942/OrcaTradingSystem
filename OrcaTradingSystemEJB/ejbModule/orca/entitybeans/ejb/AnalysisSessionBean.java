@@ -23,9 +23,7 @@ public class AnalysisSessionBean implements AnalysisSessionBeanLocal {
 	@PersistenceContext(unitName = "PortfolioEntityBeansJPA-ejbPU")
 	EntityManager em;
 	
-    public AnalysisSessionBean() {
-        // TODO Auto-generated constructor stub
-    }
+    public AnalysisSessionBean() { }
     
     public String getPortfolioName(int portfolioId) {
     	TypedQuery<String> query = em.createQuery("SELECT p.name FROM Portfolio p WHERE p.id = :i", String.class);

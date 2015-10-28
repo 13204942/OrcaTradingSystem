@@ -50,7 +50,7 @@ public class Stocks implements Serializable {
     	this.name =  name;
     }
     
-    @Column(name="Name")
+    @Column(name="stock_name")
     public String getName() {
     	return name;
     }
@@ -59,7 +59,7 @@ public class Stocks implements Serializable {
     	this.open = open;
     }
     
-    @Column(name="Open")
+    @Column(name="Open_price")
     public Double getOpen() {
     	return open;
     }
@@ -68,7 +68,7 @@ public class Stocks implements Serializable {
     	this.high = high;
     }
     
-    @Column(name="High")
+    @Column(name="High_price")
     public Double getHigh() {
     	return high;
     }
@@ -77,7 +77,7 @@ public class Stocks implements Serializable {
     	this.low = low;
     }
     
-    @Column(name="Low")
+    @Column(name="Low_price")
     public Double getLow() {
     	return low;
     }
@@ -86,7 +86,7 @@ public class Stocks implements Serializable {
     	this.close = close;
     }
     
-    @Column(name="Close")
+    @Column(name="Close_price")
     public Double getClose() {
     	return close;
     }

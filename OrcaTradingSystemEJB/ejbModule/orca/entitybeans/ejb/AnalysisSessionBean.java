@@ -73,6 +73,7 @@ public class AnalysisSessionBean implements AnalysisSessionBeanLocal {
 		return trades;
 	}
 	
+<<<<<<< HEAD
     private void doDiagnostics(String message, Trades trade) {
 
         System.out.println(message);
@@ -83,6 +84,9 @@ public class AnalysisSessionBean implements AnalysisSessionBeanLocal {
             		trade.getBuy() + "--" + trade.getTimestamp());
         }
     }
+=======
+    public AnalysisSessionBean() { }
+>>>>>>> refs/remotes/origin/FangBranch
     
 	@Override
     public String getPortfolioName(int portfolioId) {

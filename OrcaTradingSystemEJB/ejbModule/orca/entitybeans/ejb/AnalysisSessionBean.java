@@ -10,6 +10,22 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+
+import orca.entitybeans.jpa.Portfolio;
+import orca.entitybeans.jpa.Stocks;
+import orca.entitybeans.jpa.Trade;
+
+/**
+ * Session Bean implementation class AnalysisSessionBean
+ */
+@Stateless
+public class AnalysisSessionBean implements AnalysisSessionBeanLocal {
+
+	@PersistenceContext(unitName = "PortfolioEntityBeansJPA-ejbPU")
+	EntityManager em;
+	
+    public AnalysisSessionBean() { }
+
 import orca.entitybeans.jpa.Trades;
 
 @Stateless
@@ -18,9 +34,7 @@ public class AnalysisSessionBean implements AnalysisSessionBeanLocal {
 	@PersistenceContext(unitName = "OrcaEntityBeansJPA-ejbPU")
 	EntityManager em;
 
-	public AnalysisSessionBean() {
-		
-	}
+	public AnalysisSessionBean() { }
 	    
 	@Override
 	public List<Double> getPrices(String code) {
@@ -59,34 +73,11 @@ public class AnalysisSessionBean implements AnalysisSessionBeanLocal {
 	}
 	    
 	@Override
-	public List<Trades> getAllTrades(int id) {
-		// TODO Auto-generated method stub
-		
-        Query query = em.createQuery("SELECT t FROM Trades AS t WHERE t.portfolioId = ?", Trades.class);
-        query.setParameter(1, id);
-
-        List<Trades> trades = query.getResultList();
-
-        for (Trades trade: trades) {
-            doDiagnostics("Got portfolio in getAllPortfolios()", trade);
-        }
-		return trades;
-	}
-	
-<<<<<<< HEAD
-    private void doDiagnostics(String message, Trades trade) {
-
-        System.out.println(message);
-        if (trade == null) {
-            System.out.print("The list: Stocks is null");
-        } else {
-            System.out.println("Got " + trade.getPortfolioId() +" " + trade.getStocksCode() + "--" + trade.getPrice() + 
-            		trade.getBuy() + "--" + trade.getTimestamp());
-        }
+	public List<Trade> getAllTrades(int portfolioId) {
+    	TypedQuery<Trade> query = em.createQuery("SELECT t FROM Trade t WHERE t.portfolioID = :p", Trade.class);
+    	query.setParameter("p", portfolioId);
+    	return (List<Trade>) query.getResultList();
     }
-=======
-    public AnalysisSessionBean() { }
->>>>>>> refs/remotes/origin/FangBranch
     
 	@Override
     public String getPortfolioName(int portfolioId) {

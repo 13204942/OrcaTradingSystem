@@ -1,36 +1,32 @@
 package orca.entitybeans.jpa;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="STOCKSOWNED")
-public class StocksOwned implements Serializable {
+@Table(name="TRADES")
+public class Trades implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private Integer id;
-    private Integer portfolioId;
     private String stocksCode;
-    private Integer sharesOwned;
+    private Double price;
+    private boolean buy;
+    private Integer shares;
+    private Date timestamp;
+    private Integer portfolioId;
     private Portfolio portfolio;
     
-    public StocksOwned() {
+    public Trades() {
     	
     }
     
@@ -45,15 +41,6 @@ public class StocksOwned implements Serializable {
         return id;
     }
     
-    public void setPortfolioId(Integer portfolioId) {
-    	this.portfolioId = portfolioId;
-    }
-    
-    @Column(name="Portfolio_id")
-    public Integer getPortfolioId() {
-    	return portfolioId;
-    }
-    
     public void setStocksCode(String stocksCode) {
     	this.stocksCode = stocksCode;
     }
@@ -63,15 +50,51 @@ public class StocksOwned implements Serializable {
     	return stocksCode;
     }
     
-    public void setSharesOwned(Integer sharesOwned) {
-    	this.sharesOwned = sharesOwned;
+    public void setPrice(Double price) {
+    	this.price = price;
     }
     
-    @Column(name="Shares_owned")
-    public Integer getSharesOwned() {
-    	return sharesOwned;
+    @Column(name="Price")
+    public Double getPrice() {
+    	return price;
     }
-
+    
+    public void setBuy(boolean buy) {
+    	this.buy = buy;
+    }
+    
+    @Column(name="Buy")
+    public boolean getBuy() {
+    	return buy;
+    }
+    
+    public void setShares(Integer shares) {
+    	this.shares = shares;
+    }
+    
+    @Column(name="Shares")
+    public Integer getShares() {
+    	return shares;
+    }
+    
+    public void setTimestamp(Date timestamp) {
+    	this.timestamp = timestamp;
+    }
+    
+    @Column(name="Timestamp")
+    public Date getTimestamp() {
+    	return timestamp;
+    }
+    
+    public void setPortfolioId(Integer portfolioId) {
+    	this.portfolioId = portfolioId;
+    }
+    
+    @Column(name="Portfolio_id")
+    public Integer getPortfolioId() {
+    	return portfolioId;
+    }
+    
     public void setPortfolio(Portfolio portfolio) {
         this.portfolio = portfolio;
     }
@@ -80,5 +103,4 @@ public class StocksOwned implements Serializable {
     public Portfolio getPortfolio() {
         return portfolio;
     }
-    
 }
